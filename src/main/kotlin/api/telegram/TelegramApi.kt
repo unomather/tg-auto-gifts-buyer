@@ -1,0 +1,47 @@
+package api.telegram
+
+import api.base.ApiParameter
+import api.base.BaseApi
+import api.base.HttpRequestType.GET
+import api.base.HttpRequestType.POST
+import api.telegram.data.Message
+import api.telegram.data.Update
+import bot.data.SendMessageRequest
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.buildJsonArray
+import kotlinx.serialization.json.buildJsonObject
+
+interface TelegramApi {
+    suspend fun deleteWebHook()
+    suspend fun getUpdates(offset: Long?): List<Update>
+    suspend fun sendMessage(request: SendMessageRequest): Message
+}
+
+internal class TelegramApiImpl: BaseApi(), TelegramApi {
+    override suspend fun deleteWebHook() = makeHttpRequest<Unit>(
+        type = GET,
+        route = "deleteWebhook",
+        parameters = listOf(
+            ApiParameter(name = "drop_pending_updates", data = "true")
+        )
+    )
+
+    override suspend fun getUpdates(offset: Long?) = makeHttpRequest<List<Update>>(
+        type = POST,
+        route = "getUpdates",
+        bodyString = run {
+            val body = buildJsonObject {
+                put("timeout", JsonPrimitive(25))
+                if (offset != null) put("offset", JsonPrimitive(offset))
+                put("allowed_updates", buildJsonArray { add(JsonPrimitive("message")) })
+            }
+            body.toString()
+        }
+    )
+
+    override suspend fun sendMessage(request: SendMessageRequest) = makeHttpRequest<Message>(
+        type = POST,
+        route = "sendMessage",
+        bodyString = json.encodeToString(request)
+    )
+}
