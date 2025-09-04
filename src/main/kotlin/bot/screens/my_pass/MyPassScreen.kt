@@ -1,10 +1,10 @@
 package bot.screens.my_pass
 
-import bot.data.KeyboardButton
 import bot.data.KeyboardMarkup
 import bot.screens.BaseScreen
 import bot.screens.ScreenTag.MyPassScreenTag.*
 import bot.screens.ScreenTag.StartScreenTag.MyPass
+import core.extensions.asKeyboardItem
 
 class MyPassScreen: BaseScreen(MyPass) {
     /**
@@ -12,9 +12,9 @@ class MyPassScreen: BaseScreen(MyPass) {
      */
     override val keyboard = KeyboardMarkup(
         keyboard = listOf(
-            listOf(KeyboardButton(AutoTracking.tag)),
-            listOf(KeyboardButton(AutoPurchase.tag)),
-            listOf(KeyboardButton(BackToMenu.tag))
+            AutoTracking.asKeyboardItem(),
+            AutoPurchase.asKeyboardItem(),
+            BackToMenu.asKeyboardItem()
         )
     )
 

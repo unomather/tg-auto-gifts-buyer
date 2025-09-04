@@ -1,11 +1,11 @@
 package bot.screens.start
 
-import bot.data.KeyboardButton
 import bot.data.KeyboardMarkup
 import bot.screens.BaseScreen
 import bot.screens.ScreenTag.MyPassScreenTag
 import bot.screens.ScreenTag.StartScreenTag.*
 import bot.screens.ScreenTag.StartTag
+import core.extensions.asKeyboardItem
 import core.extensions.runCatchingApp
 import usecase.gifts.GetGiftsUseCase
 import usecase.stars.GetStarsOnBalanceUseCase
@@ -22,9 +22,9 @@ class StartScreen(
      */
     override val keyboard = KeyboardMarkup(
         keyboard = listOf(
-            listOf(KeyboardButton(MyPass.tag)),
-            listOf(KeyboardButton(SetTrackingAndAutoPurchase.tag)),
-            listOf(KeyboardButton(Faq.tag))
+            MyPass.asKeyboardItem(),
+            SetTrackingAndAutoPurchase.asKeyboardItem(),
+            Faq.asKeyboardItem()
         )
     )
 
