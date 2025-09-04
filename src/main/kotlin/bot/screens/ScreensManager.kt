@@ -18,7 +18,7 @@ class ScreensManager(
      */
     suspend fun getScreenRequest(chatId: Long, tagString: String) = allScreens
         .find { screen ->
-            screen.tag == ScreenTag.entries.find { it.tag == tagString }
+            screen.tag == allScreenTags.find { it.tag == tagString }
         }
         ?.let { screen ->
             SendMessageRequest(
