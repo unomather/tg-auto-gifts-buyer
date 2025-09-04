@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KeyboardMarkup(
-    @SerialName("keyboard")
+    @SerialName("inline_keyboard")
     val keyboard: List<List<KeyboardButton>>
 )

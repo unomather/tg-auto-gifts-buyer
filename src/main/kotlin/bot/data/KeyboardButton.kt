@@ -6,5 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class KeyboardButton(
     @SerialName("text")
-    val text: String
+    val text: String,
+    @SerialName("callback_data")
+    val callbackData: String
 )

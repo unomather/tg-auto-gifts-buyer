@@ -8,22 +8,58 @@ import bot.screens.ScreenTag.StartScreenTag.MyPass
 import bot.screens.ScreenTag.StartScreenTag.SetTrackingAndAutoPurchase
 import bot.screens.ScreenTag.StartTag
 
-sealed class ScreenTag(open val tag: String) {
+sealed class ScreenTag(
+    open val tag: String,
+    open val callbackId: String
+) {
     /** START **/
-    data object StartTag: ScreenTag("/start")
+    data object StartTag: ScreenTag(
+        tag = "/start",
+        callbackId = "start"
+    )
 
     /** START SCREEN **/
-    sealed class StartScreenTag(override val tag: String): ScreenTag(tag) {
-        data object MyPass: StartScreenTag("Мой пропуск")
-        data object SetTrackingAndAutoPurchase: StartScreenTag("Настроить отслеживание и автозакуп")
-        data object Faq: StartScreenTag("Вопросы и ответы")
+    sealed class StartScreenTag(
+        override val tag: String,
+        override val callbackId: String
+    ): ScreenTag(
+        tag = tag,
+        callbackId = callbackId
+    ) {
+        data object MyPass: StartScreenTag(
+            tag = "Мой пропуск",
+            callbackId = "my_pass"
+        )
+        data object SetTrackingAndAutoPurchase: StartScreenTag(
+            tag = "Настроить отслеживание и автозакуп",
+            callbackId = "auto_track_buy_settings"
+        )
+        data object Faq: StartScreenTag(
+            tag = "Вопросы и ответы",
+            callbackId = "fqa"
+        )
     }
 
     /** START SCREEN **/
-    sealed class MyPassScreenTag(override val tag: String): ScreenTag(tag) {
-        data object AutoTracking: MyPassScreenTag("Отслеживание - 499 ⭐")
-        data object AutoPurchase: MyPassScreenTag("Автозакуп - 1499 ⭐")
-        data object BackToMenu: MyPassScreenTag("Назад в меню")
+    sealed class MyPassScreenTag(
+        override val tag: String,
+        override val callbackId: String
+    ): ScreenTag(
+        tag = tag,
+        callbackId = callbackId
+    ) {
+        data object AutoTracking: MyPassScreenTag(
+            tag = "Отслеживание - 499 ⭐",
+            callbackId = "auto_track"
+        )
+        data object AutoPurchase: MyPassScreenTag(
+            tag = "Автозакуп - 1499 ⭐",
+            callbackId = "auto_buy"
+        )
+        data object BackToMenu: MyPassScreenTag(
+            tag = "Назад в меню",
+            callbackId = "back_from_my_pass"
+        )
     }
 }
 

@@ -8,6 +8,8 @@ data class Update(
     @SerialName("update_id")
     val updateId: Long,
     @SerialName("message")
-    val message: Message? = null
+    val message: Message? = null,
+    @SerialName("callback_query")
+    val callbackQuery: CallbackQuery? = null
 )
 

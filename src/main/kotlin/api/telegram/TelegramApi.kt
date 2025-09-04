@@ -6,6 +6,9 @@ import api.base.HttpRequestType.GET
 import api.base.HttpRequestType.POST
 import api.telegram.data.Message
 import api.telegram.data.Update
+import bot.data.AnswerCallbackQueryRequest
+import bot.data.DeleteMessageRequest
+import bot.data.EditMessageRequest
 import bot.data.SendMessageRequest
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
@@ -15,6 +18,9 @@ interface TelegramApi {
     suspend fun deleteWebHook()
     suspend fun getUpdates(offset: Long?): List<Update>
     suspend fun sendMessage(request: SendMessageRequest): Message
+    suspend fun editMessageText(request: EditMessageRequest): Message
+    suspend fun answerCallbackQuery(request: AnswerCallbackQueryRequest)
+    suspend fun deleteMessage(request: DeleteMessageRequest)
 }
 
 internal class TelegramApiImpl: BaseApi(), TelegramApi {
@@ -32,8 +38,16 @@ internal class TelegramApiImpl: BaseApi(), TelegramApi {
         bodyString = run {
             val body = buildJsonObject {
                 put("timeout", JsonPrimitive(25))
-                if (offset != null) put("offset", JsonPrimitive(offset))
-                put("allowed_updates", buildJsonArray { add(JsonPrimitive("message")) })
+                if (offset != null) {
+                    put("offset", JsonPrimitive(offset))
+                }
+                put(
+                    key = "allowed_updates",
+                    element = buildJsonArray {
+                        add(JsonPrimitive("message"))
+                        add(JsonPrimitive("callback_query"))
+                    }
+                )
             }
             body.toString()
         }
@@ -42,6 +56,24 @@ internal class TelegramApiImpl: BaseApi(), TelegramApi {
     override suspend fun sendMessage(request: SendMessageRequest) = makeHttpRequest<Message>(
         type = POST,
         route = "sendMessage",
+        bodyString = json.encodeToString(request)
+    )
+
+    override suspend fun editMessageText(request: EditMessageRequest) = makeHttpRequest<Message>(
+        type = POST,
+        route = "editMessageText",
+        bodyString = json.encodeToString(request)
+    )
+
+    override suspend fun answerCallbackQuery(request: AnswerCallbackQueryRequest) = makeHttpRequest<Unit>(
+        type = POST,
+        route = "answerCallbackQuery",
+        bodyString = json.encodeToString(request)
+    )
+
+    override suspend fun deleteMessage(request: DeleteMessageRequest) = makeHttpRequest<Unit>(
+        type = POST,
+        route = "deleteMessage",
         bodyString = json.encodeToString(request)
     )
 }

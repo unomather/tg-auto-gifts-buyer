@@ -7,8 +7,14 @@ import usecase.gifts.GetGiftsUseCase
 import usecase.gifts.GetGiftsUseCaseImpl
 import usecase.stars.GetStarsOnBalanceUseCase
 import usecase.stars.GetStarsOnBalanceUseCaseImpl
+import usecase.telegram.AnswerCallbackQueryUseCase
+import usecase.telegram.AnswerCallbackQueryUseCaseImpl
+import usecase.telegram.DeleteMessageUseCase
+import usecase.telegram.DeleteMessageUseCaseImpl
 import usecase.telegram.DeleteWebHookUseCase
 import usecase.telegram.DeleteWebHookUseCaseImpl
+import usecase.telegram.EditMessageUseCase
+import usecase.telegram.EditMessageUseCaseImpl
 import usecase.telegram.GetUpdatesUseCase
 import usecase.telegram.GetUpdatesUseCaseImpl
 import usecase.telegram.SendMessageUseCase
@@ -26,7 +32,10 @@ val moduleUseCase = module {
     /**
      * TELEGRAM
      */
-    factoryOf(::GetUpdatesUseCaseImpl) { bind<GetUpdatesUseCase>() }
-    factoryOf(::SendMessageUseCaseImpl) { bind<SendMessageUseCase>() }
     factoryOf(::DeleteWebHookUseCaseImpl) { bind<DeleteWebHookUseCase>() }
+    factoryOf(::GetUpdatesUseCaseImpl) { bind<GetUpdatesUseCase>() }
+    factoryOf(::AnswerCallbackQueryUseCaseImpl) { bind<AnswerCallbackQueryUseCase>() }
+    factoryOf(::SendMessageUseCaseImpl) { bind<SendMessageUseCase>() }
+    factoryOf(::EditMessageUseCaseImpl) { bind<EditMessageUseCase>() }
+    factoryOf(::DeleteMessageUseCaseImpl) { bind<DeleteMessageUseCase>() }
 }
