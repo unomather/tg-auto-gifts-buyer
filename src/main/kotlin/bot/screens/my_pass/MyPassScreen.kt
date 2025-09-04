@@ -22,7 +22,9 @@ class MyPassScreen: BaseScreen(MyPass) {
      * TEXT
      */
     override suspend fun buildMessage() = buildString {
-        append("О чём речь?")
+        append("Для использования бота нужно преобрести пропуск.")
+        appendLine()
+        append("Что внутри?")
         appendLine()
         appendLine()
         append("Отслеживание:")
