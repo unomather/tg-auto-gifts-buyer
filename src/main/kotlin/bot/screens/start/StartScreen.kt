@@ -3,6 +3,7 @@ package bot.screens.start
 import bot.data.KeyboardButton
 import bot.data.KeyboardMarkup
 import bot.screens.BaseScreen
+import bot.screens.ScreenTag.MyPassScreenTag
 import bot.screens.ScreenTag.StartScreenTag.*
 import bot.screens.ScreenTag.StartTag
 import core.extensions.runCatchingApp
@@ -12,7 +13,10 @@ import usecase.stars.GetStarsOnBalanceUseCase
 class StartScreen(
     private val getGiftsUseCase: GetGiftsUseCase,
     private val getStarsOnBalanceUseCase: GetStarsOnBalanceUseCase,
-): BaseScreen(StartTag) {
+): BaseScreen(
+    StartTag,
+    MyPassScreenTag.BackToMenu
+) {
     /**
      * KEYBOARD
      */

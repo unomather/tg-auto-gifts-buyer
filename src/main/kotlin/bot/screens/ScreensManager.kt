@@ -16,16 +16,17 @@ class ScreensManager(
     /**
      * SCREEN REQUEST
      */
-    suspend fun getScreenRequest(chatId: Long, tagString: String) = allScreens
-        .find { screen ->
-            screen.tag == allScreenTags.find { it.tag == tagString }
-        }
-        ?.let { screen ->
-            SendMessageRequest(
-                chatId = chatId,
-                text = screen.buildMessage(),
-                replyKeyboardMarkup = screen.keyboard
-            )
-        }
-        ?: throw IllegalStateException("Can't parse a message with chatId = $chatId, tagString = $tagString")
+    suspend fun getScreenRequest(chatId: Long, tagString: String): SendMessageRequest {
+        val targetTag = allScreenTags.firstOrNull { it.tag == tagString } ?: throw IllegalStateException(
+            "Unknown tag: $tagString"
+        )
+        val screen = allScreens.firstOrNull { targetTag in it.tag } ?: throw IllegalStateException(
+            "No screen found for tag: $tagString (chatId=$chatId)"
+        )
+        return SendMessageRequest(
+            chatId = chatId,
+            text = screen.buildMessage(),
+            replyKeyboardMarkup = screen.keyboard
+        )
+    }
 }
