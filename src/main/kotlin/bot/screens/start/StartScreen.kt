@@ -5,8 +5,6 @@ import bot.data.KeyboardMarkup
 import bot.screens.BaseScreen
 import bot.screens.ScreenTag.START
 import core.extensions.runCatchingApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
 import usecase.gifts.GetGiftsUseCase
 import usecase.stars.GetStarsOnBalanceUseCase
 
@@ -19,32 +17,36 @@ class StartScreen(
      */
     override val keyboard = KeyboardMarkup(
         keyboard = listOf(
-            listOf(KeyboardButton("Баланс"), KeyboardButton("Включить автозакуп")),
-            listOf(KeyboardButton("FAQ"), KeyboardButton("Связь с админом"))
+            listOf(KeyboardButton("Мой пропуск")),
+            listOf(KeyboardButton("Настроить отслеживание и автозакуп")),
+            listOf(KeyboardButton("Вопросы и ответы"))
         )
     )
 
     /**
-     * LOGIC
+     * TEXT
      */
     override suspend fun buildMessage(): String {
         val gifts = loadGifts()
         val balance = loadStarsAmount()
         return buildString {
-            append("Добро пожаловать!")
+            append("Привет!")
             appendLine()
-            append("Вас приветствует автозакуп подарков без хуйни.")
+            append("Здесь ты можешь отслеживать выход новых подарков и автоматически их скупать.")
             appendLine()
             appendLine()
             append(balance)
             appendLine()
             appendLine()
-            append("Сейчас на маркете свободно торгуются следующие подарки:")
+            append("Сейчас на маркете доступны вот эти подарки:")
             appendLine()
             append(gifts)
         }
     }
 
+    /**
+     * GIFTS
+     */
     private suspend fun loadGifts() = runCatchingApp {
         val gifts = getGiftsUseCase(Unit)
         buildString {
@@ -54,15 +56,16 @@ class StartScreen(
             }
         }
     }.getOrElse {
-        println("loadGifts error = ${it.message}")
         "При загрузке подарков произошла ошибка"
     }
 
+    /**
+     * STARS
+     */
     private suspend fun loadStarsAmount() = runCatchingApp {
         val starsCount = getStarsOnBalanceUseCase(Unit)
-        "Ваш баланс: $starsCount звёзд"
+        "Твой баланс: $starsCount ⭐"
     }.getOrElse {
-        println("loadStarsAmount error = ${it.message}")
         "При загрузке баланса произошла ошибка"
     }
 }
