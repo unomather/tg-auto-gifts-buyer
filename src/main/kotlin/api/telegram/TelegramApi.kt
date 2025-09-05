@@ -50,6 +50,7 @@ internal class TelegramApiImpl: BaseApi(), TelegramApi {
                     element = buildJsonArray {
                         add(JsonPrimitive("message"))
                         add(JsonPrimitive("callback_query"))
+                        add(JsonPrimitive("pre_checkout_query"))
                     }
                 )
             }

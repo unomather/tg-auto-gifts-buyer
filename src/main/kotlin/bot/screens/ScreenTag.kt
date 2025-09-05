@@ -54,7 +54,8 @@ sealed class ScreenTag(
             override val callbackId: String = "auto_track",
             override val title: String = "Автоотслеживание",
             override val description: String = "Доступ к автоотслеживанию подарков",
-            override val price: Int = 499
+            override val price: Int = 499,
+            override val navigateBackTo: ScreenTag = MyPass
         ): PaymentItem, MyPassScreenTag(
             tag = tag,
             callbackId = callbackId
@@ -64,7 +65,8 @@ sealed class ScreenTag(
             override val callbackId: String = "auto_buy",
             override val title: String = "Автозакуп",
             override val description: String = "Доступ к автозакупу подарков",
-            override val price: Int = 499
+            override val price: Int = 1499,
+            override val navigateBackTo: ScreenTag = MyPass
         ): PaymentItem, MyPassScreenTag(
             tag = tag,
             callbackId = callbackId
