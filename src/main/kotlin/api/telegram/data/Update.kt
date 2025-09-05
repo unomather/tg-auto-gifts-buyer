@@ -10,6 +10,8 @@ data class Update(
     @SerialName("message")
     val message: Message? = null,
     @SerialName("callback_query")
-    val callbackQuery: CallbackQuery? = null
+    val callbackQuery: CallbackQuery? = null,
+    @SerialName("pre_checkout_query")
+    val preCheckoutQuery: PreCheckoutQuery? = null
 )
 

@@ -1,9 +1,14 @@
+import api.telegram.data.AnswerPreCheckoutQueryRequest
 import api.telegram.data.CallbackQuery
 import bot.data.AnswerCallbackQueryRequest
 import bot.data.DeleteMessageRequest
 import bot.screens.ScreenTag
+import bot.screens.ScreenTag.MyPassScreenTag.AutoPurchase
+import bot.screens.ScreenTag.MyPassScreenTag.AutoTracking
 import bot.screens.ScreensManager
+import bot.screens.allScreenTags
 import core.app_scope.AppScope
+import core.extensions.buildInvoice
 import core.extensions.runCatchingApp
 import di.appModules
 import io.ktor.client.plugins.HttpRequestTimeoutException
@@ -15,10 +20,12 @@ import org.koin.core.Koin
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import usecase.telegram.AnswerCallbackQueryUseCase
+import usecase.telegram.AnswerPreCheckoutQueryUseCase
 import usecase.telegram.DeleteMessageUseCase
 import usecase.telegram.DeleteWebHookUseCase
 import usecase.telegram.EditMessageUseCase
 import usecase.telegram.GetUpdatesUseCase
+import usecase.telegram.SendInvoiceUseCase
 import usecase.telegram.SendMessageUseCase
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.random.Random
@@ -52,6 +59,8 @@ private fun Koin.deleteWebHook(appScope: AppScope) {
 
 private fun Koin.getUpdates(appScope: AppScope) {
     val getUpdatesUseCase by inject<GetUpdatesUseCase>()
+    val deleteMessageUseCase by inject<DeleteMessageUseCase>()
+    val answerPreCheckoutQueryUseCase by inject<AnswerPreCheckoutQueryUseCase>()
     var offset: Long? = null
     appScope.scope.launch {
         while (isActive) {
@@ -64,7 +73,15 @@ private fun Koin.getUpdates(appScope: AppScope) {
                 }
                 updates.forEach { update ->
                     offset = update.updateId + 1
+                    update.preCheckoutQuery?.let { preCheckoutQuery ->
+                        val request = AnswerPreCheckoutQueryRequest(id = preCheckoutQuery.id, ok = true)
+                        answerPreCheckoutQueryUseCase(request)
+                    }
                     update.message?.let { message ->
+                        message.successfulPayment?.let {
+                            val request = DeleteMessageRequest(chatId = message.chat.id, messageId = message.messageId)
+                            deleteMessageUseCase(request)
+                        }
                         val chatId = message.chat.id
                         val text = message.text?.trim() ?: return@let
                         if (text == "/start") {
@@ -114,12 +131,22 @@ private fun Koin.answerByCallback(callbackQuery: CallbackQuery, appScope: AppSco
     val screensManager by inject<ScreensManager>()
     val editMessageUseCase by inject<EditMessageUseCase>()
     val answerCallbackQueryUseCase by inject<AnswerCallbackQueryUseCase>()
+    val sendInvoiceUseCase by inject<SendInvoiceUseCase>()
     appScope.scope.launch {
         val chatId = callbackQuery.message?.chat?.id ?: return@launch
         val messageId = callbackQuery.message.messageId
-        val tag = callbackQuery.data ?: return@launch
+        val tagString = callbackQuery.data ?: return@launch
+        val tag = allScreenTags.find { it.tag == tagString || it.callbackId == tagString } ?: return@launch
 
-        val editMessageRequest = screensManager.buildEdit(chatId, messageId, tag)
+        if (tag is AutoTracking || tag is AutoPurchase) {
+            val invoiceRequest = tag.buildInvoice(chatId, tag.callbackId)
+            sendInvoiceUseCase(invoiceRequest)
+            val answerCallbackQueryRequest = AnswerCallbackQueryRequest(callbackQuery.id, text = "Открываю оплату…")
+            answerCallbackQueryUseCase(answerCallbackQueryRequest)
+            return@launch
+        }
+
+        val editMessageRequest = screensManager.buildEdit(chatId, messageId, tagString)
         editMessageUseCase(editMessageRequest)
         val answerCallbackQueryRequest = AnswerCallbackQueryRequest(id = callbackQuery.id)
         answerCallbackQueryUseCase(answerCallbackQueryRequest)

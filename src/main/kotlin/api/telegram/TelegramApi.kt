@@ -4,7 +4,9 @@ import api.base.ApiParameter
 import api.base.BaseApi
 import api.base.HttpRequestType.GET
 import api.base.HttpRequestType.POST
+import api.telegram.data.AnswerPreCheckoutQueryRequest
 import api.telegram.data.Message
+import api.telegram.data.SendInvoiceRequest
 import api.telegram.data.Update
 import bot.data.AnswerCallbackQueryRequest
 import bot.data.DeleteMessageRequest
@@ -21,6 +23,8 @@ interface TelegramApi {
     suspend fun editMessageText(request: EditMessageRequest): Message
     suspend fun answerCallbackQuery(request: AnswerCallbackQueryRequest)
     suspend fun deleteMessage(request: DeleteMessageRequest)
+    suspend fun sendInvoice(request: SendInvoiceRequest): Message
+    suspend fun answerPreCheckoutQuery(request: AnswerPreCheckoutQueryRequest)
 }
 
 internal class TelegramApiImpl: BaseApi(), TelegramApi {
@@ -74,6 +78,18 @@ internal class TelegramApiImpl: BaseApi(), TelegramApi {
     override suspend fun deleteMessage(request: DeleteMessageRequest) = makeHttpRequest<Unit>(
         type = POST,
         route = "deleteMessage",
+        bodyString = json.encodeToString(request)
+    )
+
+    override suspend fun sendInvoice(request: SendInvoiceRequest) = makeHttpRequest<Message>(
+        type = POST,
+        route = "sendInvoice",
+        bodyString = json.encodeToString(request)
+    )
+
+    override suspend fun answerPreCheckoutQuery(request: AnswerPreCheckoutQueryRequest) = makeHttpRequest<Unit>(
+        type = POST,
+        route = "answerPreCheckoutQuery",
         bodyString = json.encodeToString(request)
     )
 }

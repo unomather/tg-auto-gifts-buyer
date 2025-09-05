@@ -1,5 +1,6 @@
 package bot.screens
 
+import bot.model.PaymentItem
 import bot.screens.ScreenTag.MyPassScreenTag.AutoPurchase
 import bot.screens.ScreenTag.MyPassScreenTag.AutoTracking
 import bot.screens.ScreenTag.MyPassScreenTag.BackToMenu
@@ -48,13 +49,25 @@ sealed class ScreenTag(
         tag = tag,
         callbackId = callbackId
     ) {
-        data object AutoTracking: MyPassScreenTag(
-            tag = "Отслеживание - 499 ⭐",
-            callbackId = "auto_track"
+        data class AutoTracking(
+            override val tag: String = "Отслеживание - 499 ⭐",
+            override val callbackId: String = "auto_track",
+            override val title: String = "Автоотслеживание",
+            override val description: String = "Доступ к автоотслеживанию подарков",
+            override val price: Int = 499
+        ): PaymentItem, MyPassScreenTag(
+            tag = tag,
+            callbackId = callbackId
         )
-        data object AutoPurchase: MyPassScreenTag(
-            tag = "Автозакуп - 1499 ⭐",
-            callbackId = "auto_buy"
+        data class AutoPurchase(
+            override val tag: String = "Автозакуп - 1499 ⭐",
+            override val callbackId: String = "auto_buy",
+            override val title: String = "Автозакуп",
+            override val description: String = "Доступ к автозакупу подарков",
+            override val price: Int = 499
+        ): PaymentItem, MyPassScreenTag(
+            tag = tag,
+            callbackId = callbackId
         )
         data object BackToMenu: MyPassScreenTag(
             tag = "Назад в меню",
@@ -68,7 +81,7 @@ val allScreenTags = listOf(
     MyPass,
     SetTrackingAndAutoPurchase,
     Faq,
-    AutoTracking,
-    AutoPurchase,
+    AutoTracking(),
+    AutoPurchase(),
     BackToMenu
 )

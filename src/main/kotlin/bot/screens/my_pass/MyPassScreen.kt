@@ -12,8 +12,8 @@ class MyPassScreen: BaseScreen(MyPass) {
      */
     override val keyboard = KeyboardMarkup(
         keyboard = listOf(
-            AutoTracking.asKeyboardItem(),
-            AutoPurchase.asKeyboardItem(),
+            AutoTracking().asKeyboardItem(),
+            AutoPurchase().asKeyboardItem(),
             BackToMenu.asKeyboardItem()
         )
     )

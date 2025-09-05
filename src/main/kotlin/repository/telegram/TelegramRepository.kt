@@ -1,7 +1,9 @@
 package repository.telegram
 
 import api.telegram.TelegramApi
+import api.telegram.data.AnswerPreCheckoutQueryRequest
 import api.telegram.data.Message
+import api.telegram.data.SendInvoiceRequest
 import api.telegram.data.Update
 import bot.data.AnswerCallbackQueryRequest
 import bot.data.DeleteMessageRequest
@@ -16,6 +18,8 @@ interface TelegramRepository {
     suspend fun editMessageText(request: EditMessageRequest): Message
     suspend fun answerCallbackQuery(request: AnswerCallbackQueryRequest)
     suspend fun deleteMessage(request: DeleteMessageRequest)
+    suspend fun sendInvoice(request: SendInvoiceRequest): Message
+    suspend fun answerPreCheckoutQuery(request: AnswerPreCheckoutQueryRequest)
 }
 
 internal class TelegramRepositoryImpl(
@@ -43,5 +47,13 @@ internal class TelegramRepositoryImpl(
 
     override suspend fun deleteMessage(request: DeleteMessageRequest) = io {
         api.deleteMessage(request)
+    }
+
+    override suspend fun sendInvoice(request: SendInvoiceRequest) = io {
+        api.sendInvoice(request)
+    }
+
+    override suspend fun answerPreCheckoutQuery(request: AnswerPreCheckoutQueryRequest) = io {
+        api.answerPreCheckoutQuery(request)
     }
 }

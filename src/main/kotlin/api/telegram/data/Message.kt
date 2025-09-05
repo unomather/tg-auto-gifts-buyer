@@ -14,5 +14,7 @@ data class Message(
     @SerialName("text")
     val text: String? = null,
     @SerialName("from")
-    val from: User? = null
+    val from: User? = null,
+    @SerialName("successful_payment")
+    val successfulPayment: SuccessfulPayment? = null
 )
