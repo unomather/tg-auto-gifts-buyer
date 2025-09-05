@@ -72,8 +72,10 @@ private fun Koin.getUpdates(appScope: AppScope) {
                     }
                     update.message?.let { message ->
                         message.successfulPayment?.let {
-                            val request = DeleteMessageRequest(chatId = message.chat.id, messageId = message.messageId)
-                            deleteMessageUseCase(request)
+                            UiStore.popInvoice(message.chat.id)?.let { invoiceMessageId ->
+                                val request = DeleteMessageRequest(chatId = message.chat.id, messageId = invoiceMessageId)
+                                deleteMessageUseCase(request)
+                            }
                         }
                         val chatId = message.chat.id
                         val text = message.text?.trim() ?: return@let
@@ -140,9 +142,12 @@ private fun Koin.answerByCallback(callbackQuery: CallbackQuery, appScope: AppSco
 
         if (tag is PaymentItem) {
             val invoiceRequest = with(tag) { buildInvoice(chatId) }
-            sendInvoiceUseCase(invoiceRequest)
+            val invoice = sendInvoiceUseCase(invoiceRequest)
+            UiStore.setInvoice(chatId, invoice.messageId)
+
             val answerCallbackQueryRequest = AnswerCallbackQueryRequest(callbackQuery.id, text = "Открываю оплату…")
             answerCallbackQueryUseCase(answerCallbackQueryRequest)
+
             return@launch
         }
 

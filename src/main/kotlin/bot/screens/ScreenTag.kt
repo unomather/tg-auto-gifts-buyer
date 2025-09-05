@@ -50,22 +50,22 @@ sealed class ScreenTag(
         callbackId = callbackId
     ) {
         data class AutoTracking(
-            override val tag: String = "Отслеживание - 499 ⭐",
+            override val tag: String = "Отслеживание - 1 ⭐",
             override val callbackId: String = "auto_track",
             override val title: String = "Автоотслеживание",
             override val description: String = "Доступ к автоотслеживанию подарков",
-            override val price: Int = 499,
+            override val price: Int = 1,
             override val navigateBackTo: ScreenTag = MyPass
         ): PaymentItem, MyPassScreenTag(
             tag = tag,
             callbackId = callbackId
         )
         data class AutoPurchase(
-            override val tag: String = "Автозакуп - 1499 ⭐",
+            override val tag: String = "Автозакуп - 2 ⭐",
             override val callbackId: String = "auto_buy",
             override val title: String = "Автозакуп",
             override val description: String = "Доступ к автозакупу подарков",
-            override val price: Int = 1499,
+            override val price: Int = 2,
             override val navigateBackTo: ScreenTag = MyPass
         ): PaymentItem, MyPassScreenTag(
             tag = tag,
