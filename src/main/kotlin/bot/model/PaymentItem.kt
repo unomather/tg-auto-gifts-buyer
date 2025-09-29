@@ -1,10 +1,10 @@
 package bot.model
 
-import bot.screens.ScreenTag
+import bot.screens.BaseScreenTag
 
 interface PaymentItem {
     val title: String
     val description: String
     val price: Int
-    val navigateBackTo: ScreenTag
+    val navigateBackTo: BaseScreenTag
 }

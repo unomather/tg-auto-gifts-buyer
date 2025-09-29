@@ -1,10 +1,10 @@
 package bot.navigation
 
 import bot.model.PaymentItem
-import bot.screens.ScreenTag
+import bot.screens.BaseScreenTag
 
 sealed class Intent {
-    data class ToScreen(val tag: ScreenTag) : Intent()
+    data class ToScreen(val tag: BaseScreenTag) : Intent()
     data class ToOverlay(val item: PaymentItem) : Intent()
-    data class BackToScreenFromOverlay(val tag: ScreenTag) : Intent()
+    data class BackToScreenFromOverlay(val tag: BaseScreenTag) : Intent()
 }

@@ -2,10 +2,8 @@ package bot.navigation
 
 import bot.data.DeleteMessageRequest
 import bot.model.PaymentItem
-import bot.navigation.Intent.ToOverlay
-import bot.navigation.Intent.BackToScreenFromOverlay
-import bot.navigation.Intent.ToScreen
-import bot.screens.ScreenTag
+import bot.navigation.Intent.*
+import bot.screens.BaseScreenTag
 import bot.screens.ScreensManager
 import core.extensions.buildInvoice
 import usecase.telegram.DeleteMessageUseCase
@@ -29,7 +27,7 @@ class Navigator(
         }
     }
 
-    private suspend fun openScreen(chatId: Long, tag: ScreenTag) {
+    private suspend fun openScreen(chatId: Long, tag: BaseScreenTag) {
         val anchor = session.anchor(chatId)
         if (anchor == null) {
             val sendMessageRequest = screensManager.buildSend(chatId = chatId, tagString = tag.tag)
@@ -43,7 +41,7 @@ class Navigator(
     }
 
     private suspend fun showOverlay(chatId: Long, item: PaymentItem) {
-        val screenTag = item as ScreenTag
+        val screenTag = item as BaseScreenTag
         val sendInvoiceRequest = with(screenTag) { item.buildInvoice(chatId) }
         val message = sendInvoiceUseCase(sendInvoiceRequest)
         session.setOverlay(chatId = chatId, msgId = message.messageId)
@@ -51,7 +49,7 @@ class Navigator(
 
     private suspend fun closeOverlayAndBack(
         chatId: Long,
-        backTo: ScreenTag,
+        backTo: BaseScreenTag,
         sourceMessageId: Long?
     ) {
         val messageIdToDelete = sourceMessageId ?: session.popOverlay(chatId)

@@ -4,7 +4,7 @@ import api.telegram.data.AnswerPreCheckoutQueryRequest
 import api.telegram.data.Update
 import bot.data.AnswerCallbackQueryRequest
 import bot.data.DeleteMessageRequest
-import bot.screens.ScreenTag.StartTag
+import bot.screens.BaseStartTag
 import usecase.telegram.AnswerCallbackQueryUseCase
 import usecase.telegram.AnswerPreCheckoutQueryUseCase
 import usecase.telegram.DeleteMessageUseCase
@@ -39,8 +39,8 @@ class UpdateRouter(
                 return
             }
             val text = message.text?.trim()
-            if (text == StartTag.tag) {
-                navigator.perform(chatId, Intent.ToScreen(StartTag))
+            if (text == BaseStartTag.tag) {
+                navigator.perform(chatId, Intent.ToScreen(BaseStartTag))
                 val request = DeleteMessageRequest(chatId = chatId, messageId = message.messageId)
                 deleteMessageUseCase(request)
             }

@@ -1,7 +1,7 @@
 package bot.navigation
 
 import bot.model.PaymentItem
-import bot.screens.allScreenTags
+import bot.screens.tg_gifts_auto_buy.allScreenTags
 
 class CallbackDataParser {
     fun parse(data: String): Intent? {

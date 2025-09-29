@@ -1,6 +1,6 @@
 package bot.navigation
 
-import bot.screens.ScreenTag
+import bot.screens.BaseScreenTag
 import java.util.concurrent.ConcurrentHashMap
 
 class SessionStore {
@@ -9,7 +9,7 @@ class SessionStore {
      */
     private data class Session(
         var anchorMessageId: Long? = null,
-        var currentTag: ScreenTag? = null,
+        var currentTag: BaseScreenTag? = null,
         var overlayMessageId: Long? = null
     )
 
@@ -29,9 +29,9 @@ class SessionStore {
     /**
      * SCREEN
      */
-    fun currentTag(chatId: Long): ScreenTag? = getSession(chatId).currentTag
+    fun currentTag(chatId: Long): BaseScreenTag? = getSession(chatId).currentTag
 
-    fun setCurrentTag(chatId: Long, tag: ScreenTag) {
+    fun setCurrentTag(chatId: Long, tag: BaseScreenTag) {
         getSession(chatId).currentTag = tag
     }
 

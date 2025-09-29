@@ -1,10 +1,10 @@
-package bot.screens.tg_gifts_auto_buy.start
+package bot.screens.tg_gifts_auto_buy.screens.start
 
 import bot.data.KeyboardMarkup
 import bot.screens.BaseScreen
-import bot.screens.ScreenTag.MyPassScreenTag
-import bot.screens.ScreenTag.StartScreenTag.*
-import bot.screens.ScreenTag.StartTag
+import bot.screens.BaseStartTag
+import bot.screens.tg_gifts_auto_buy.ScreenTag.MyPassScreenTag
+import bot.screens.tg_gifts_auto_buy.ScreenTag.StartScreenTag.*
 import core.extensions.asKeyboardItem
 import core.extensions.runCatchingApp
 import usecase.gifts.GetGiftsUseCase
@@ -16,7 +16,7 @@ class StartScreenGifts(
     private val getStarsOnBalanceUseCase: GetStarsOnBalanceUseCase,
     private val updateUserUseCase: UpdateUserUseCase
 ): BaseScreen(
-    StartTag,
+    BaseStartTag,
     MyPassScreenTag.BackToMenu
 ) {
     /**

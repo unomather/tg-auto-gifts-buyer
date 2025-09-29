@@ -5,9 +5,9 @@ import api.telegram.data.SendInvoiceRequest
 import bot.data.KeyboardButton
 import bot.data.KeyboardMarkup
 import bot.model.PaymentItem
-import bot.screens.ScreenTag
+import bot.screens.BaseScreenTag
 
-context(screenTag: ScreenTag) fun PaymentItem.buildInvoice(chatId: Long) = SendInvoiceRequest(
+context(screenTag: BaseScreenTag) fun PaymentItem.buildInvoice(chatId: Long) = SendInvoiceRequest(
     chatId = chatId,
     title = title,
     description = "Доступ к автоотслеживанию подарков",

@@ -1,24 +1,15 @@
-package bot.screens
+package bot.screens.tg_gifts_auto_buy
 
 import bot.model.PaymentItem
-import bot.screens.ScreenTag.MyPassScreenTag.AutoPurchase
-import bot.screens.ScreenTag.MyPassScreenTag.AutoTracking
-import bot.screens.ScreenTag.MyPassScreenTag.BackToMenu
-import bot.screens.ScreenTag.StartScreenTag.Faq
-import bot.screens.ScreenTag.StartScreenTag.MyPass
-import bot.screens.ScreenTag.StartScreenTag.SetTrackingAndAutoPurchase
-import bot.screens.ScreenTag.StartTag
+import bot.screens.BaseScreenTag
+import bot.screens.BaseStartTag
+import bot.screens.tg_gifts_auto_buy.ScreenTag.MyPassScreenTag.*
+import bot.screens.tg_gifts_auto_buy.ScreenTag.StartScreenTag.*
 
 sealed class ScreenTag(
-    open val tag: String,
-    open val callbackId: String
-) {
-    /** START **/
-    data object StartTag: ScreenTag(
-        tag = "/start",
-        callbackId = "start"
-    )
-
+    override val tag: String,
+    override val callbackId: String
+): BaseScreenTag {
     /** START SCREEN **/
     sealed class StartScreenTag(
         override val tag: String,
@@ -79,7 +70,7 @@ sealed class ScreenTag(
 }
 
 val allScreenTags = listOf(
-    StartTag,
+    BaseStartTag,
     MyPass,
     SetTrackingAndAutoPurchase,
     Faq,

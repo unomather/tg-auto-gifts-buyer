@@ -1,8 +1,8 @@
-package bot.screens.tg_gifts_auto_buy
+package bot.screens.tg_gifts_auto_buy.screens
 
 import bot.screens.BaseScreensProvider
-import bot.screens.tg_gifts_auto_buy.my_pass.MyPassScreenGifts
-import bot.screens.tg_gifts_auto_buy.start.StartScreenGifts
+import bot.screens.tg_gifts_auto_buy.screens.my_pass.MyPassScreenGifts
+import bot.screens.tg_gifts_auto_buy.screens.start.StartScreenGifts
 
 interface TgGiftsAutoBuyScreensProvider: BaseScreensProvider
 

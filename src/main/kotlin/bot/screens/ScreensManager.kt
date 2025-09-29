@@ -2,7 +2,8 @@ package bot.screens
 
 import bot.data.EditMessageRequest
 import bot.data.SendMessageRequest
-import bot.screens.tg_gifts_auto_buy.TgGiftsAutoBuyScreensProvider
+import bot.screens.tg_gifts_auto_buy.allScreenTags
+import bot.screens.tg_gifts_auto_buy.screens.TgGiftsAutoBuyScreensProvider
 
 class ScreensManager(
     tgGiftsAutoBuyScreensProvider: TgGiftsAutoBuyScreensProvider
