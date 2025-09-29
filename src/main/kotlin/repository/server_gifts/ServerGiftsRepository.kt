@@ -1,18 +1,18 @@
-package repository.server
+package repository.server_gifts
 
-import api.server.ServerApi
-import api.server.data.User
-import api.server.data.UserIdRequest
+import api.server_gifts.ServerGiftsApi
+import api.server_gifts.data.User
+import api.server_gifts.data.UserIdRequest
 import core.repository.BaseRepository
 
-interface ServerRepository {
+interface ServerGiftsRepository {
     suspend fun getUser(request: UserIdRequest): User
     suspend fun updateUser(user: User)
 }
 
-internal class ServerRepositoryImpl(
-    private val api: ServerApi
-): BaseRepository(), ServerRepository {
+internal class ServerGiftsRepositoryImpl(
+    private val api: ServerGiftsApi
+): BaseRepository(), ServerGiftsRepository {
     override suspend fun getUser(request: UserIdRequest) = io {
         api.getUser(request)
     }

@@ -1,10 +1,12 @@
 package bot.navigation
 
+import api.server_auto_accept.AcceptApplicationRequest
 import api.telegram.data.AnswerPreCheckoutQueryRequest
 import api.telegram.data.Update
 import bot.data.AnswerCallbackQueryRequest
 import bot.data.DeleteMessageRequest
 import bot.screens.BaseStartTag
+import usecase.server_auto_accept.AcceptApplicationUseCase
 import usecase.telegram.AnswerCallbackQueryUseCase
 import usecase.telegram.AnswerPreCheckoutQueryUseCase
 import usecase.telegram.DeleteMessageUseCase
@@ -15,7 +17,8 @@ class UpdateRouter(
     private val sessionStore: SessionStore,
     private val answerCallbackQueryUseCase: AnswerCallbackQueryUseCase,
     private val answerPreCheckoutQueryUseCase: AnswerPreCheckoutQueryUseCase,
-    private val deleteMessageUseCase: DeleteMessageUseCase
+    private val deleteMessageUseCase: DeleteMessageUseCase,
+    private val acceptApplicationUseCase: AcceptApplicationUseCase
 ) {
     suspend fun handle(update: Update) {
         /**
@@ -41,8 +44,18 @@ class UpdateRouter(
             val text = message.text?.trim()
             if (text == BaseStartTag.tag) {
                 navigator.perform(chatId, Intent.ToScreen(BaseStartTag))
-                val request = DeleteMessageRequest(chatId = chatId, messageId = message.messageId)
-                deleteMessageUseCase(request)
+                val acceptApplicationRequest = message.from?.let { from ->
+                    AcceptApplicationRequest(
+                        userId = from.id,
+                        username = from.username.orEmpty(),
+                        name = "${from.firstName.orEmpty()} ${from.lastName.orEmpty()}"
+                    )
+                }
+                acceptApplicationRequest?.let {
+                    acceptApplicationUseCase(it)
+                }
+                val deleteMessageRequest = DeleteMessageRequest(chatId = chatId, messageId = message.messageId)
+                deleteMessageUseCase(deleteMessageRequest)
             }
             return
         }

@@ -1,19 +1,19 @@
-package api.server
+package api.server_gifts
 
 import api.base.ApiClientSettings.Server
 import api.base.ApiParameter
 import api.base.BaseApi
 import api.base.HttpRequestType.GET
 import api.base.HttpRequestType.POST
-import api.server.data.User
-import api.server.data.UserIdRequest
+import api.server_gifts.data.User
+import api.server_gifts.data.UserIdRequest
 
-interface ServerApi {
+interface ServerGiftsApi {
     suspend fun getUser(request: UserIdRequest): User
     suspend fun updateUser(user: User)
 }
 
-internal class ServerApiImpl: BaseApi(Server), ServerApi {
+internal class ServerGiftsApiImpl: BaseApi(Server), ServerGiftsApi {
     override suspend fun getUser(request: UserIdRequest) = makeHttpRequest<User>(
         type = GET,
         route = "getUser",

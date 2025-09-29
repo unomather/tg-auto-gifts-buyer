@@ -2,8 +2,10 @@ package di.api
 
 import api.gifts.GiftsApi
 import api.gifts.GiftsApiImpl
-import api.server.ServerApi
-import api.server.ServerApiImpl
+import api.server_auto_accept.ServerAutoAcceptApi
+import api.server_auto_accept.ServerAutoAcceptApiImpl
+import api.server_gifts.ServerGiftsApi
+import api.server_gifts.ServerGiftsApiImpl
 import api.stars.StarsApi
 import api.stars.StarsApiImpl
 import api.telegram.TelegramApi
@@ -59,5 +61,6 @@ val moduleApi = module {
     /**
      * SERVER
      */
-    singleOf(::ServerApiImpl) { bind<ServerApi>() }
+    singleOf(::ServerGiftsApiImpl) { bind<ServerGiftsApi>() }
+    singleOf(::ServerAutoAcceptApiImpl) { bind<ServerAutoAcceptApi>() }
 }

@@ -10,5 +10,5 @@ val moduleNavigation = module {
     single { SessionStore() }
     single { CallbackDataParser() }
     single { Navigator(get(), get(), get(), get(), get(), get()) }
-    single { UpdateRouter(get(), get(), get(), get(), get(), get()) }
+    single { UpdateRouter(get(), get(), get(), get(), get(), get(), get()) }
 }

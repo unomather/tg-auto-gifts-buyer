@@ -5,10 +5,12 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import usecase.gifts.GetGiftsUseCase
 import usecase.gifts.GetGiftsUseCaseImpl
-import usecase.server.GetUserUseCase
-import usecase.server.GetUserUseCaseImpl
-import usecase.server.UpdateUserUseCase
-import usecase.server.UpdateUserUseCaseImpl
+import usecase.server_auto_accept.AcceptApplicationUseCase
+import usecase.server_auto_accept.AcceptApplicationUseCaseImpl
+import usecase.server_gifts.GetUserUseCase
+import usecase.server_gifts.GetUserUseCaseImpl
+import usecase.server_gifts.UpdateUserUseCase
+import usecase.server_gifts.UpdateUserUseCaseImpl
 import usecase.stars.GetStarsOnBalanceUseCase
 import usecase.stars.GetStarsOnBalanceUseCaseImpl
 import usecase.telegram.AnswerCallbackQueryUseCase
@@ -49,8 +51,12 @@ val moduleUseCase = module {
     factoryOf(::SendInvoiceUseCaseImpl) { bind<SendInvoiceUseCase>() }
     factoryOf(::AnswerPreCheckoutQueryUseCaseImpl) { bind<AnswerPreCheckoutQueryUseCase>() }
     /**
-     * SERVER
+     * SERVER GIFTS
      */
     factoryOf(::GetUserUseCaseImpl) { bind<GetUserUseCase>() }
     factoryOf(::UpdateUserUseCaseImpl) { bind<UpdateUserUseCase>() }
+    /**
+     * SERVER AUTO ACCEPT
+     */
+    factoryOf(::AcceptApplicationUseCaseImpl) { bind<AcceptApplicationUseCase>() }
 }

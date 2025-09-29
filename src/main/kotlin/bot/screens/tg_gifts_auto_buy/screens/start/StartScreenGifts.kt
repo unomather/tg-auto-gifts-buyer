@@ -8,7 +8,7 @@ import bot.screens.tg_gifts_auto_buy.ScreenTag.StartScreenTag.*
 import core.extensions.asKeyboardItem
 import core.extensions.runCatchingApp
 import usecase.gifts.GetGiftsUseCase
-import usecase.server.UpdateUserUseCase
+import usecase.server_gifts.UpdateUserUseCase
 import usecase.stars.GetStarsOnBalanceUseCase
 
 class StartScreenGifts(

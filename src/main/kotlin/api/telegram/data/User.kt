@@ -11,6 +11,8 @@ data class User(
     val isBot: Boolean,
     @SerialName("first_name")
     val firstName: String? = null,
+    @SerialName("last_name")
+    val lastName: String? = null,
     @SerialName("username")
     val username: String? = null
 )

@@ -1,4 +1,4 @@
-package api.server.data
+package api.server_gifts.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
