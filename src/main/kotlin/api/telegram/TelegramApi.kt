@@ -1,5 +1,6 @@
 package api.telegram
 
+import api.base.ApiClientSettings.Telegram
 import api.base.ApiParameter
 import api.base.BaseApi
 import api.base.HttpRequestType.GET
@@ -27,7 +28,7 @@ interface TelegramApi {
     suspend fun answerPreCheckoutQuery(request: AnswerPreCheckoutQueryRequest)
 }
 
-internal class TelegramApiImpl: BaseApi(), TelegramApi {
+internal class TelegramApiImpl: BaseApi(Telegram), TelegramApi {
     override suspend fun deleteWebHook() = makeHttpRequest<Unit>(
         type = GET,
         route = "deleteWebhook",

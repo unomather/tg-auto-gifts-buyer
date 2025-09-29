@@ -5,6 +5,10 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import usecase.gifts.GetGiftsUseCase
 import usecase.gifts.GetGiftsUseCaseImpl
+import usecase.server.GetUserUseCase
+import usecase.server.GetUserUseCaseImpl
+import usecase.server.UpdateUserUseCase
+import usecase.server.UpdateUserUseCaseImpl
 import usecase.stars.GetStarsOnBalanceUseCase
 import usecase.stars.GetStarsOnBalanceUseCaseImpl
 import usecase.telegram.AnswerCallbackQueryUseCase
@@ -44,4 +48,9 @@ val moduleUseCase = module {
     factoryOf(::DeleteMessageUseCaseImpl) { bind<DeleteMessageUseCase>() }
     factoryOf(::SendInvoiceUseCaseImpl) { bind<SendInvoiceUseCase>() }
     factoryOf(::AnswerPreCheckoutQueryUseCaseImpl) { bind<AnswerPreCheckoutQueryUseCase>() }
+    /**
+     * SERVER
+     */
+    factoryOf(::GetUserUseCaseImpl) { bind<GetUserUseCase>() }
+    factoryOf(::UpdateUserUseCaseImpl) { bind<UpdateUserUseCase>() }
 }

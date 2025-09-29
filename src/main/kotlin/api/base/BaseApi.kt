@@ -1,27 +1,15 @@
 package api.base
 
 import api.base.HttpRequestType.*
-import api.base.error.HttpClientError.*
+import api.base.error.HttpClientError.ApiRequestError
+import api.base.error.HttpClientError.ParsingApiResponseError
 import core.extensions.runCatchingApp
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.delete
-import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.request.headers
-import io.ktor.client.request.parameter
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
-import io.ktor.client.request.url
-import io.ktor.http.ContentType
-import io.ktor.http.HeadersBuilder
-import io.ktor.http.HttpHeaders
-import io.ktor.http.contentType
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.request.*
+import io.ktor.http.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.decodeFromJsonElement
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -35,7 +23,7 @@ data class ApiParameter(
     val data: Any?
 )
 
-abstract class BaseApi: KoinComponent {
+abstract class BaseApi(val apiClientSettings: ApiClientSettings): KoinComponent {
 
     protected val json by inject<Json>()
     protected val client by inject<HttpClient>()
@@ -48,7 +36,7 @@ abstract class BaseApi: KoinComponent {
         crossinline headers: HeadersBuilder.() -> Unit = {},
     ): T {
         val httpCallback: HttpRequestBuilder.() -> Unit = {
-            url("https://api.telegram.org/bot8359890378:AAEcNGb_Zy5e7ehh1SOBnilzThn5xOcMaqY/$route")
+            url("${apiClientSettings.baseUrl}/$route")
             headers {
                 contentType(ContentType.Application.Json)
                 header(HttpHeaders.ContentType, ContentType.Application.Json.toString())

@@ -2,6 +2,8 @@ package di.api
 
 import api.gifts.GiftsApi
 import api.gifts.GiftsApiImpl
+import api.server.ServerApi
+import api.server.ServerApiImpl
 import api.stars.StarsApi
 import api.stars.StarsApiImpl
 import api.telegram.TelegramApi
@@ -54,4 +56,8 @@ val moduleApi = module {
      * TELEGRAM
      */
     singleOf(::TelegramApiImpl) { bind<TelegramApi>() }
+    /**
+     * SERVER
+     */
+    singleOf(::ServerApiImpl) { bind<ServerApi>() }
 }

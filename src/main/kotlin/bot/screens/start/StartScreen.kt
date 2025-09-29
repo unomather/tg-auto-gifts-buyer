@@ -8,11 +8,13 @@ import bot.screens.ScreenTag.StartTag
 import core.extensions.asKeyboardItem
 import core.extensions.runCatchingApp
 import usecase.gifts.GetGiftsUseCase
+import usecase.server.UpdateUserUseCase
 import usecase.stars.GetStarsOnBalanceUseCase
 
 class StartScreen(
     private val getGiftsUseCase: GetGiftsUseCase,
     private val getStarsOnBalanceUseCase: GetStarsOnBalanceUseCase,
+    private val updateUserUseCase: UpdateUserUseCase
 ): BaseScreen(
     StartTag,
     MyPassScreenTag.BackToMenu
