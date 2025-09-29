@@ -1,4 +1,4 @@
-package bot.screens.start
+package bot.screens.tg_gifts_auto_buy.start
 
 import bot.data.KeyboardMarkup
 import bot.screens.BaseScreen
@@ -11,7 +11,7 @@ import usecase.gifts.GetGiftsUseCase
 import usecase.server.UpdateUserUseCase
 import usecase.stars.GetStarsOnBalanceUseCase
 
-class StartScreen(
+class StartScreenGifts(
     private val getGiftsUseCase: GetGiftsUseCase,
     private val getStarsOnBalanceUseCase: GetStarsOnBalanceUseCase,
     private val updateUserUseCase: UpdateUserUseCase

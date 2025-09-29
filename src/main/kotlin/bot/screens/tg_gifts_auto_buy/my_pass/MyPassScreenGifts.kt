@@ -1,4 +1,4 @@
-package bot.screens.my_pass
+package bot.screens.tg_gifts_auto_buy.my_pass
 
 import bot.data.KeyboardMarkup
 import bot.screens.BaseScreen
@@ -6,7 +6,7 @@ import bot.screens.ScreenTag.MyPassScreenTag.*
 import bot.screens.ScreenTag.StartScreenTag.MyPass
 import core.extensions.asKeyboardItem
 
-class MyPassScreen: BaseScreen(MyPass) {
+class MyPassScreenGifts: BaseScreen(MyPass) {
     /**
      * KEYBOARD
      */

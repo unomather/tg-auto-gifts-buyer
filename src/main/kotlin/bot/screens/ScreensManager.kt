@@ -2,17 +2,15 @@ package bot.screens
 
 import bot.data.EditMessageRequest
 import bot.data.SendMessageRequest
-import bot.screens.my_pass.MyPassScreen
-import bot.screens.start.StartScreen
+import bot.screens.tg_gifts_auto_buy.TgGiftsAutoBuyScreensProvider
 
 class ScreensManager(
-    startScreen: StartScreen,
-    myPassScreen: MyPassScreen
+    tgGiftsAutoBuyScreensProvider: TgGiftsAutoBuyScreensProvider
 ) {
     /**
      * SCREENS
      */
-    private val allScreens = listOf(startScreen, myPassScreen)
+    private val allScreens = tgGiftsAutoBuyScreensProvider.provide()
 
     /**
      * SCREEN REQUEST
