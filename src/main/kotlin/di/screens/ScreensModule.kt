@@ -1,6 +1,9 @@
 package di.screens
 
 import bot.screens.ScreensManager
+import bot.screens.auto_accept.screens.AutoAcceptScreensProvider
+import bot.screens.auto_accept.screens.AutoAcceptScreensProviderImpl
+import bot.screens.auto_accept.screens.start.StartScreenAutoAccept
 import bot.screens.tg_gifts_auto_buy.screens.TgGiftsAutoBuyScreensProvider
 import bot.screens.tg_gifts_auto_buy.screens.TgGiftsAutoBuyScreensProviderImpl
 import bot.screens.tg_gifts_auto_buy.screens.my_pass.MyPassScreenGifts
@@ -21,4 +24,10 @@ val moduleScreens = module {
     factoryOf(::StartScreenGifts)
     factoryOf(::MyPassScreenGifts)
     factoryOf(::TgGiftsAutoBuyScreensProviderImpl) { bind<TgGiftsAutoBuyScreensProvider>() }
+
+    /**
+     * AUTO ACCEPT
+     */
+    factoryOf(::StartScreenAutoAccept)
+    factoryOf(::AutoAcceptScreensProviderImpl) { bind<AutoAcceptScreensProvider>() }
 }

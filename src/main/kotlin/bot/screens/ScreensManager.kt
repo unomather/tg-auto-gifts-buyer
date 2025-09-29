@@ -2,16 +2,18 @@ package bot.screens
 
 import bot.data.EditMessageRequest
 import bot.data.SendMessageRequest
+import bot.screens.auto_accept.screens.AutoAcceptScreensProvider
 import bot.screens.tg_gifts_auto_buy.allScreenTags
 import bot.screens.tg_gifts_auto_buy.screens.TgGiftsAutoBuyScreensProvider
 
 class ScreensManager(
-    tgGiftsAutoBuyScreensProvider: TgGiftsAutoBuyScreensProvider
+//    provider: TgGiftsAutoBuyScreensProvider,
+    provider: AutoAcceptScreensProvider
 ) {
     /**
      * SCREENS
      */
-    private val allScreens = tgGiftsAutoBuyScreensProvider.provide()
+    private val allScreens = provider.provide()
 
     /**
      * SCREEN REQUEST
